@@ -1,0 +1,41 @@
+PODS:
+  - Flutter (1.0.0)
+  - FlutterPluginRegistrant (0.0.1):
+    - Flutter
+    - zind_plugin
+  - Zind (1.0.0):
+    - Flutter
+  - zind_module (0.0.1):
+    - Flutter
+  - zind_plugin (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `../ExampleModule/.ios/Flutter/engine`)
+  - FlutterPluginRegistrant (from `../ExampleModule/.ios/Flutter/FlutterPluginRegistrant`)
+  - Zind (from `../`)
+  - zind_module (from `../ExampleModule/.ios/Flutter`)
+  - zind_plugin (from `../ExampleModule/.ios/.symlinks/plugins/zind_plugin/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: "../ExampleModule/.ios/Flutter/engine"
+  FlutterPluginRegistrant:
+    :path: "../ExampleModule/.ios/Flutter/FlutterPluginRegistrant"
+  Zind:
+    :path: "../"
+  zind_module:
+    :path: "../ExampleModule/.ios/Flutter"
+  zind_plugin:
+    :path: "../ExampleModule/.ios/.symlinks/plugins/zind_plugin/ios"
+
+SPEC CHECKSUMS:
+  Flutter: ac41d61a47ae5bf8195a5598d2d63754888ec0d5
+  FlutterPluginRegistrant: d6051fbd3641b6ab6cc9d117a801cb1b0caa797b
+  Zind: b98dac6d4d37f8647f5a2206578d3712d4546075
+  zind_module: 17c5873f15e61670691be9d6161ee4a9e6da6390
+  zind_plugin: c912a51b517b14d2df99733675b021134edf137b
+
+PODFILE CHECKSUM: 66d6b7bc79aa9dd81017194e475bd63e824be240
+
+COCOAPODS: 1.10.0

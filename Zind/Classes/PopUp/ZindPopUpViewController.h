@@ -5,7 +5,7 @@
 //  Created by lzackx on 2021/3/16.
 //
 
-#import <Zind/Zind.h>
+#import "ZindBaseContainer.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

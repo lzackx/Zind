@@ -29,49 +29,60 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	ZIND_LIFE_CYCLE_LOGGER
+	NSLog(@"url: %@", self.url);
 	self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewWillLayoutSubviews {
 	[super viewWillLayoutSubviews];
 	ZIND_LIFE_CYCLE_LOGGER
+	NSLog(@"url: %@", self.url);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	ZIND_LIFE_CYCLE_LOGGER
+	NSLog(@"url: %@", self.url);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	ZIND_LIFE_CYCLE_LOGGER
-	[self attachShareVC];
+	NSLog(@"url: %@", self.url);
+	[self attachShareVCIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
 	ZIND_LIFE_CYCLE_LOGGER
-	[self deattachShareVC];
+	NSLog(@"url: %@", self.url);
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
 	ZIND_LIFE_CYCLE_LOGGER
+	NSLog(@"url: %@", self.url);
 }
 
 - (void)dealloc {
 	ZIND_LIFE_CYCLE_LOGGER
+	NSLog(@"url: %@", self.url);
 }
 
 #pragma mark - Content
-- (void)attachShareVC {
-	self.shareVC.view.frame = self.view.bounds;
-	[self.view addSubview:self.shareVC.view];
-	[self.shareVC.engine.engineMember updatePage:[self.url copy]];
+- (BOOL)isVisible {
+	return (self.isViewLoaded && self.view.window);
 }
 
-- (void)deattachShareVC {
-	[self.shareVC.view removeFromSuperview];
+- (void)attachShareVCIfNeeded {
+//	if (self.shareVC.view.superview == self.view) {
+//		return;
+//	} else {
+		[self.shareVC.view removeFromSuperview];
+		self.shareVC.view.frame = self.view.bounds;
+//	}
+	[self.view addSubview:self.shareVC.view];
+	[self.shareVC.engine.engineMember updatePage:[self.url copy]];
 }
 
 @end

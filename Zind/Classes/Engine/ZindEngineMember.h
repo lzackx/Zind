@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite, copy) NSString *type;
 @property (nonatomic, readonly, copy) NSString *entryPoint;
 @property (nonatomic, readonly, copy) NSString *initialRoute;
-@property (nonatomic, readwrite, weak) ZindBaseContainer *occupiedVC;
+@property (nonatomic, readwrite, assign) BOOL shouldRetained;
 
 - (instancetype)initWithEngine:(FlutterEngine *)engine
 					entryPoint:(NSString *)entryPoint

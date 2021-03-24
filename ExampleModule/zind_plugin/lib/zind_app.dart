@@ -1,66 +1,50 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:zind_plugin/zind_app_unknown_page.dart';
 import 'package:zind_plugin/zind_plugin.dart';
 import 'package:zind_plugin/zind_route_model.dart';
 
 class ZindApp {
-  final String initialRoute;
+  final ZindRouteModel routeModel;
   final Map<String, WidgetBuilder> pageRoutes;
 
-  ZindApp({@required this.initialRoute, @required this.pageRoutes});
+  ZindApp({@required this.routeModel, @required this.pageRoutes}) {
+    WidgetsFlutterBinding.ensureInitialized();
+    ZindPlugin.setupChannel();
+  }
 
   MaterialApp createApp(BuildContext context) {
-    ZindPlugin.setupChannel();
-    return MaterialApp(
-      navigatorKey: GlobalKey(debugLabel: "com.zind.key.navigator"),
-      initialRoute: this.initialRoute,
-      onGenerateRoute: (setting) {
-        return PageRouteBuilder(
-          pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-            print("onGenerateRoute: $setting");
-            Widget page = this.pageRoutes[setting.name](context);
-            return page;
-          },
-        );
+    ZindPlugin.setupRouteHandler(
+      routePushPageHandler: (ZindRouteModel routeModel) {
+        this.handleRoutePushPage(routeModel);
       },
+      routePopPageHandler: (ZindRouteModel routeModel) {
+        this.handleRoutePopPage(routeModel);
+      },
+      routeUpdatePageHandler: (ZindRouteModel routeModel) {
+        this.handleRouteUpdatePage(routeModel);
+      },
+    );
+    return MaterialApp(
+      navigatorKey: ZindPlugin.navigatorKey,
+      initialRoute: routeModel.url,
+      routes: this.pageRoutes,
       onUnknownRoute: (RouteSettings settings) {
         print("onUnknownRoute: $settings");
         return PageRouteBuilder(
           pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-            return MaterialAppHome(this.pageRoutes);
+            return ZindAppUnknownPage();
           },
         );
       },
-      home: MaterialAppHome(this.pageRoutes),
     );
   }
-}
 
-class MaterialAppHome extends StatelessWidget {
-  final Map<String, WidgetBuilder> pageRoutes;
-
-  MaterialAppHome(this.pageRoutes);
-
-  @override
-  Widget build(BuildContext context) {
-    ZindPlugin.setupRouteHandler(
-      routePushPageHandler: (ZindRouteModel routeModel) {
-        this.setupRoutePushPageHandler(context, routeModel);
-      },
-      routePopPageHandler: (ZindRouteModel routeModel) {
-        this.setupRoutePopPageHandler(context, routeModel);
-      },
-      routeUpdatePageHandler: (ZindRouteModel routeModel) {
-        this.setupRouteUpdatePageHandler(context, routeModel);
-      },
-    );
-    return this.pageRoutes.values.first(context);
-  }
-
-  void setupRoutePushPageHandler(BuildContext context, ZindRouteModel routeModel) {
+  void handleRoutePushPage(ZindRouteModel routeModel) {
+    print("handleRoutePushPage");
     Navigator.push(
-      context,
+      ZindPlugin.navigatorKey.currentContext,
       PageRouteBuilder(
         settings: RouteSettings(
           name: routeModel.url,
@@ -74,19 +58,22 @@ class MaterialAppHome extends StatelessWidget {
     );
   }
 
-  void setupRoutePopPageHandler(BuildContext context, ZindRouteModel routeModel) {
-    Navigator.pop(context);
+  void handleRoutePopPage(ZindRouteModel routeModel) {
+    print("handleRoutePopPage");
+    Navigator.pop(ZindPlugin.navigatorKey.currentContext);
   }
 
-  void setupRouteUpdatePageHandler(BuildContext context, ZindRouteModel routeModel) {
+  void handleRouteUpdatePage(ZindRouteModel routeModel) {
+    print("handleRouteUpdatePage");
     Navigator.pushReplacement(
-      context,
+      ZindPlugin.navigatorKey.currentContext,
       PageRouteBuilder(
         settings: RouteSettings(
           name: routeModel.url,
           arguments: routeModel.parameters.private.toMap(),
         ),
         pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+          print("pushReplacement ${routeModel.toJson()}");
           Widget page = this.pageRoutes[routeModel.url](context);
           return page;
         },

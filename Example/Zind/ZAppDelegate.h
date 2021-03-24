@@ -7,13 +7,10 @@
 //
 
 @import UIKit;
-#import "ZTabbarController.h"
-
+#import <Zind/Zind.h>
 
 @interface ZAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
-@property (nonatomic, readwrite, strong) ZTabbarController *tabbarController;
 
 @end

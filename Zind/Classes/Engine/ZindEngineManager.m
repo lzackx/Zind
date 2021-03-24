@@ -44,12 +44,20 @@
 - (ZindEngineMember *)createEngineMemberWithType:(NSString *)type
 									  entryPoint:(nonnull NSString *)entryPoint
 									initialRoute:(nonnull NSString *)initialRoute {
+	return [self createEngineMemberWithType:type entryPoint:entryPoint initialRoute:initialRoute shouldRetain:NO];
+}
+
+- (ZindEngineMember *)createEngineMemberWithType:(NSString *)type
+									  entryPoint:(nonnull NSString *)entryPoint
+									initialRoute:(nonnull NSString *)initialRoute
+									shouldRetain:(BOOL)shouldRetain {
 	ZIND_LIFE_CYCLE_LOGGER
 	FlutterEngine *engine = [self.engineGroup makeEngineWithEntrypoint:entryPoint libraryURI:nil];
 	ZindEngineMember *engineMember = [[ZindEngineMember alloc] initWithEngine:engine
 																   entryPoint:entryPoint
 																 initialRoute:initialRoute];
 	engineMember.type = type;
+	engineMember.shouldRetained = shouldRetain;
 	[self.emLock lock];
 	[self.engineMembers setObject:engineMember forKey:type];
 	[self.emLock unlock];
@@ -77,6 +85,9 @@
 		return;
 	}
 	ZindEngineMember *engineMember = [self.engineMembers objectForKey:type];
+	if (engineMember.shouldRetained) {
+		return;
+	}
 	[engineMember removeObserver:self forKeyPath:@"lifeCycle"];
 	[self.emLock lock];
 	[self.engineMembers removeObjectForKey:type];

@@ -21,33 +21,34 @@
 
 #pragma mark - Life Cycle
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+	[super viewDidLoad];
+	[self setupControllers];
 }
 
 #pragma mark - Public
 - (void)setupControllers {
 	
+	ZindRouteModel *routeModel = [ZindRouteModel yy_modelWithJSON:ZindDefaultRouteModelString];
+	routeModel.url = @"/account";
+	if (routeModel == nil) {
+		return;
+	}
+	
 	self.shareVC = (ZindShareViewController*)[ZindContainerFactory createContainerWithContainerClass:NSClassFromString(@"ZindShareViewController")
-																					entryPoint:@"shared"
-																				  initialRoute:@"/"
-																						preRun:YES];
+																						  entryPoint:@"shared"
+																						initialRoute:[routeModel yy_modelToJSONString]
+																							  preRun:YES];
 	self.shareVC.view.backgroundColor = [UIColor whiteColor];
-	
 	ZindShareContainer *shareContainer1 = [[ZindShareContainer alloc] initWithShareVC:self.shareVC url:@"/home"];
-	shareContainer1.title = @"shareContainer1";
+	shareContainer1.tabBarItem.title = @"shareContainer1";
+	shareContainer1.tabBarItem.image = [UIImage imageNamed:@"triangle"];
+	
 	ZindShareContainer *shareContainer2 = [[ZindShareContainer alloc] initWithShareVC:self.shareVC url:@"/account"];
-	shareContainer2.title = @"shareContainer2";
+	shareContainer2.tabBarItem.title = @"shareContainer2";
+	shareContainer2.tabBarItem.image = [UIImage imageNamed:@"triangle"];
 	
-	ZViewController *vc = [[ZViewController alloc] init];
-	vc.title = @"vc";
-	vc.view.backgroundColor = [UIColor whiteColor];
-	
-	self.viewControllers = @[
-		shareContainer1,
-		shareContainer2,
-		vc,
-	];
+	[self addChildViewController:shareContainer1];
+	[self addChildViewController:shareContainer2];
 }
 
 @end

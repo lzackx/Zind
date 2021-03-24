@@ -7,6 +7,7 @@
 
 #import "ZindEngineMember.h"
 #import "ZindBaseContainer.h"
+#import "ZindRouteModel.h"
 
 @interface ZindEngineMember ()
 
@@ -29,6 +30,7 @@
 		_entryPoint = entryPoint;
 		_initialRoute = initialRoute;
 		_lifeCycleLock = [[NSLock alloc] init];
+		_shouldRetained = NO;
 		[self registerPlugins];
 		_lifeCycle = ZindEngineMemberLifeCycleInitialized;
 	}
@@ -45,15 +47,16 @@
 
 - (void)runEngine {
 	ZIND_LIFE_CYCLE_LOGGER
-	[self.engine runWithEntrypoint:self.entryPoint initialRoute:self.entryPoint];
-	[self.engine ensureSemanticsEnabled];
+	[self.engine runWithEntrypoint:self.entryPoint initialRoute:self.initialRoute];
 	[self setupLifeCycle:ZindEngineMemberLifeCycleRunning];
 }
 
 - (void)cleanEngine {
 	ZIND_LIFE_CYCLE_LOGGER
 	self.engine.viewController = nil;
-	[self.engine destroyContext];
+	if (self.shouldRetained == NO) {
+		[self.engine destroyContext];
+	}
 }
 
 #pragma mark - Getter / Setter
@@ -73,14 +76,15 @@
 	if ([NSClassFromString(@"GeneratedPluginRegistrant") respondsToSelector:@selector(registerWithRegistry:)]) {
 		[NSClassFromString(@"GeneratedPluginRegistrant") performSelector:@selector(registerWithRegistry:) withObject:self.engine];
 	}
+	[self.engine ensureSemanticsEnabled];
 }
 
 #pragma mark - Occupied VC
 - (NSString *)serializeArguments:(NSDictionary *)arguments {
 	NSError *error;
 	NSData *argumentsData = [NSJSONSerialization dataWithJSONObject:arguments
-															 options:NSJSONWritingFragmentsAllowed
-															   error:&error];
+															options:NSJSONWritingFragmentsAllowed
+															  error:&error];
 	if (argumentsData == nil) {
 		NSLog(@"error: %@", error);
 		return nil;
@@ -125,15 +129,13 @@
 
 - (void)updatePage:(NSString *)page {
 	ZIND_LIFE_CYCLE_LOGGER
-	NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
-	[arguments setObject:page forKey:@"url"];
-	[arguments setObject:@{@"public":@{}, @"private":@{}} forKey:@"parameters"];
-	NSString *argumentsJSON = [self serializeArguments:arguments];
-	if (argumentsJSON == nil) {
+	ZindRouteModel *routeModel = [ZindRouteModel yy_modelWithJSON:ZindDefaultRouteModelString];
+	routeModel.url = page;
+	if (routeModel == nil) {
 		return;
 	}
 	[self.memberChannel invokeMethod:@"updatePage"
-						   arguments:argumentsJSON
+						   arguments:[routeModel yy_modelToJSONString]
 							  result:^(id  _Nullable result) {
 		NSLog(@"invokeMethod updatePage");
 		NSLog(@"result: %@", result);

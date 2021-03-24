@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithShareVC:(ZindShareViewController *)shareVC url:(NSString *)url;
 
+- (void)attachShareVCIfNeeded;
+
 @end
 
 NS_ASSUME_NONNULL_END

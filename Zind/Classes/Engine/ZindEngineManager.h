@@ -19,6 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 									  entryPoint:(nonnull NSString *)entryPoint
 									initialRoute:(nonnull NSString *)initialRoute;
 
+- (ZindEngineMember *)createEngineMemberWithType:(NSString *)type
+									  entryPoint:(nonnull NSString *)entryPoint
+									initialRoute:(nonnull NSString *)initialRoute
+									shouldRetain:(BOOL)shouldRetain;
+
 - (ZindEngineMember *)getEngineWithType:(NSString *)type;
 
 @end

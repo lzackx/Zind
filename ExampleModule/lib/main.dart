@@ -1,62 +1,104 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:zind_module/advertisement.dart';
+import 'package:zind_module/update.dart';
 import 'package:zind_plugin/zind_plugin.dart';
 
 import 'package:zind_plugin/zind_app.dart';
 import 'package:zind_module/home.dart';
 import 'package:zind_module/account.dart';
+import 'package:zind_plugin/zind_route_model.dart';
 
-void main() => runApp(BaseApp("main()", Colors.white));
-
-@pragma('vm:entry-point')
-void shared() => runApp(ShareApp("shared()", Colors.lightBlue));
-
-@pragma('vm:entry-point')
-void popup() => runApp(BaseApp("popup()", Colors.red));
+void main() {
+  runApp(BaseApp());
+}
 
 @pragma('vm:entry-point')
-void carousel() => runApp(BaseApp("Carousel()", Colors.lightGreen));
+void shared() {
+  print("share entry point");
+  runApp(ShareApp());
+}
 
-class ShareApp extends StatelessWidget {
-  final String title;
-  final Color backgroundColor;
-  ZindApp _app;
+@pragma('vm:entry-point')
+void popup() {
+  print("pop up entry point");
+  runApp(PopUpApp());
+}
 
-  ShareApp(this.title, this.backgroundColor) {
-    Map<String, WidgetBuilder> pageRoutes = {
-      "/home": (BuildContext context) => Home(),
-      "/account": (BuildContext context) => Account(),
-    };
-    _app = ZindApp(initialRoute: "/home", pageRoutes: pageRoutes);
+class PopUpApp extends StatelessWidget {
+  static Map<String, WidgetBuilder> _pageRoutes = {
+    "/update": (BuildContext context) => Update(),
+    "/advertisement": (BuildContext context) => Advertisement(),
+  };
+  static ZindApp _app;
+
+  PopUpApp() {
+    print("PopUpApp initialRoute: ${ui.window.defaultRouteName}");
+    ZindRouteModel routeModel = ZindRouteModel();
+    try {
+      routeModel = ZindRouteModel.fromJson(ui.window.defaultRouteName);
+    } catch (e) {
+      print("decode initialRoute exception: $e");
+    } finally {
+      print("finally error");
+    }
+    _app = ZindApp(routeModel: routeModel, pageRoutes: _pageRoutes);
   }
 
   @override
   Widget build(BuildContext context) {
-    print("MyApp build");
-    print("title: ${this.title} initialRoute ${ui.window.defaultRouteName}");
+    print("PopUpApp build");
+    return _app.createApp(context);
+  }
+}
 
+class ShareApp extends StatelessWidget {
+  static Map<String, WidgetBuilder> _pageRoutes = {
+    "/home": (BuildContext context) => Home(),
+    "/account": (BuildContext context) => Account(),
+  };
+  static ZindApp _app;
+
+  ShareApp() {
+    print("ShareApp initialRoute: ${ui.window.defaultRouteName}");
+    ZindRouteModel routeModel = ZindRouteModel();
+    try {
+      routeModel = ZindRouteModel.fromJson(ui.window.defaultRouteName);
+    } catch (e) {
+      print("decode initialRoute exception: $e");
+    } finally {
+      print("finally error");
+    }
+    _app = ZindApp(routeModel: routeModel, pageRoutes: _pageRoutes);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("PopUpApp build");
     return _app.createApp(context);
   }
 }
 
 class BaseApp extends StatelessWidget {
-  final String title;
-  final Color backgroundColor;
-  ZindApp _app;
+  static Map<String, WidgetBuilder> _pageRoutes = {};
+  static ZindApp _app;
 
-  BaseApp(this.title, this.backgroundColor) {
-    Map<String, WidgetBuilder> pageRoutes = {
-      "/home": (BuildContext context) => Home(),
-      "/account": (BuildContext context) => Account(),
-    };
-    _app = ZindApp(initialRoute: "/home", pageRoutes: pageRoutes);
+  BaseApp() {
+    print("initialRoute: ${ui.window.defaultRouteName}");
+    try {
+      ZindRouteModel routeModel = ZindRouteModel.fromJson(ui.window.defaultRouteName);
+      _app = ZindApp(routeModel: routeModel, pageRoutes: _pageRoutes);
+    } catch (e) {
+      print("decode initialRoute exception: $e");
+    } finally {
+      print("finally error");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    print("MyApp build");
-    print("title: ${this.title} initialRoute ${ui.window.defaultRouteName}");
-
+    print("PopUpApp build");
     return _app.createApp(context);
   }
 }

@@ -321,6 +321,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Zind_Example/Pods-Zind_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework",
 				"${BUILT_PRODUCTS_DIR}/Zind/Zind.framework",
 				"${PODS_ROOT}/../../ExampleModule/.ios/Flutter/App.framework",
 				"${BUILT_PRODUCTS_DIR}/zind_plugin/zind_plugin.framework",
@@ -328,6 +329,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYModel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zind.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/App.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/zind_plugin.framework",
@@ -531,8 +533,6 @@
 					"\"Zind\"",
 					"-framework",
 					"\"zind_plugin\"",
-					"-Xlinker",
-					"-interposable",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -563,8 +563,6 @@
 					"\"Zind\"",
 					"-framework",
 					"\"zind_plugin\"",
-					"-Xlinker",
-					"-interposable",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";

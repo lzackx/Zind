@@ -28,9 +28,15 @@ A framework for Flutter (>= 2.0.0)
 	s.social_media_url = 'https://github.com/lzackx/Zind'
 	# s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
 	s.ios.deployment_target = '9.0'
-	s.source_files = 'Zind/Classes/**/*'
+	s.source_files = [
+	'Zind/Classes/*.{h,m}',
+	'Zind/Classes/Engine/*.{h,m}',
+	'Zind/Classes/Share/*.{h,m}',
+	'Zind/Classes/PopUp/*.{h,m}',
+	]
 	s.public_header_files = 'Zind/Classes/**/*.h'
 	s.dependency 'Flutter'#, '~> 2.0.0'
+	s.dependency 'YYModel'
 	# s.resource_bundles = {
 	#   'Zind' => ['Zind/Assets/*.png']
 	# }

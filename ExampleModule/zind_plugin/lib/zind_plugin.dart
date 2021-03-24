@@ -13,11 +13,14 @@ typedef RouteUpdatePageHandler = void Function(ZindRouteModel routeModel);
 
 class ZindPlugin {
   static const MethodChannel _zind_channel = const MethodChannel('com.zind.engine.channel');
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>(debugLabel: "com.zind.key.navigator");
+
   static RoutePushPageHandler _routePushPageHandler;
   static RoutePopPageHandler _routePopPageHandler;
   static RouteUpdatePageHandler _routeUpdatePageHandler;
 
   static void setupChannel() {
+    print("ZindPlugin setupChannel");
     _zind_channel.setMethodCallHandler(_handleChannelMethodCall);
   }
 
@@ -25,6 +28,7 @@ class ZindPlugin {
       {@required RoutePushPageHandler routePushPageHandler,
       @required RoutePopPageHandler routePopPageHandler,
       @required RouteUpdatePageHandler routeUpdatePageHandler}) {
+    print("ZindPlugin setupRouteHandler");
     _routePushPageHandler = routePushPageHandler;
     _routePopPageHandler = routePopPageHandler;
     _routeUpdatePageHandler = routeUpdatePageHandler;
@@ -75,9 +79,9 @@ class ZindPlugin {
 
   static void updatePage(ZindRouteModel routeModel) {
     print("flutter updatePage ${routeModel.toJson()}");
-    // if (_routeUpdatePageHandler != null) {
+    if (_routeUpdatePageHandler != null) {
       print("routeUpdatePageHandler ${routeModel.toJson()}");
       _routeUpdatePageHandler(routeModel);
-    // }
+    }
   }
 }

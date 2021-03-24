@@ -3,8 +3,10 @@ PODS:
   - FlutterPluginRegistrant (0.0.1):
     - Flutter
     - zind_plugin
+  - YYModel (1.0.4)
   - Zind (1.0.0):
     - Flutter
+    - YYModel
   - zind_module (0.0.1):
     - Flutter
   - zind_plugin (0.0.1):
@@ -16,6 +18,10 @@ DEPENDENCIES:
   - Zind (from `../`)
   - zind_module (from `../ExampleModule/.ios/Flutter`)
   - zind_plugin (from `../ExampleModule/.ios/.symlinks/plugins/zind_plugin/ios`)
+
+SPEC REPOS:
+  trunk:
+    - YYModel
 
 EXTERNAL SOURCES:
   Flutter:
@@ -32,7 +38,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: ac41d61a47ae5bf8195a5598d2d63754888ec0d5
   FlutterPluginRegistrant: d6051fbd3641b6ab6cc9d117a801cb1b0caa797b
-  Zind: b98dac6d4d37f8647f5a2206578d3712d4546075
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
+  Zind: ce1a2054f2754aa859f34f4fbfb38736e8afa5a1
   zind_module: 17c5873f15e61670691be9d6161ee4a9e6da6390
   zind_plugin: c912a51b517b14d2df99733675b021134edf137b
 

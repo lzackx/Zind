@@ -17,24 +17,27 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	
-	// preload
-	ZindEngineMember *engineMember = [[ZindEngineManager shared] getEngineWithType:@"ZindShareViewController"];
-	if (engineMember == nil) {
-		engineMember = [[ZindEngineManager shared] createEngineMemberWithType:@"ZindShareViewController"
-																   entryPoint:@"shared"
-																 initialRoute:@"/"];
-		[engineMember runEngine];
-	}
+	self.view.backgroundColor = [UIColor cyanColor];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 	
-	ZindBaseContainer *container = [ZindContainerFactory createContainerWithContainerClass:NSClassFromString(@"ZindShareViewController")
-																				entryPoint:@"shared"
-																			  initialRoute:@"/"
-																					preRun:YES];
-	[self.navigationController pushViewController:container animated:YES];
+	NSString *page = [NSString string];
+	static NSUInteger tag = 0;
+	if (tag % 2 == 0) {
+		page = @"/advertisement";
+	} else {
+		page = @"/update";
+	}
+	tag++;
+	
+	[ZindContainerFactory showPopUpViewControllerWithFromViewController:self
+															 EntryPoint:@"popup"
+														   initialRoute:nil
+																   Page:page
+															 completion:^{
+		NSLog(@"Pop Up Shown");
+	}];
 }
 
 @end

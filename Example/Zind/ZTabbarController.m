@@ -29,7 +29,6 @@
 - (void)setupControllers {
 	
 	ZindRouteModel *routeModel = [ZindRouteModel yy_modelWithJSON:ZindDefaultRouteModelString];
-	routeModel.url = @"/account";
 	if (routeModel == nil) {
 		return;
 	}

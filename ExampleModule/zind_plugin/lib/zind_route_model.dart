@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+
 class ZindRouteModel {
   ZindRouteModel({
     this.url,
@@ -26,6 +27,13 @@ class ZindRouteModel {
         "url": url == null ? null : url,
         "parameters": parameters == null ? null : parameters.toMap(),
       };
+
+  factory ZindRouteModel.defaultModel() {
+    String defaultJSON = """
+    {\"url\":\"/\",\"parameters\":{\"public\":{\"app\":\"\",\"environment\":\"\",\"muid\":\"\",\"platform\":\"\",\"safearea_top\":0,\"safearea_bottom\":0,\"version\":\"\",\"system_version\":\"\",\"ua\":\"\"},\"private\":{}}}
+    """;
+    return ZindRouteModel.fromJson(defaultJSON);
+  }
 }
 
 class Parameters {

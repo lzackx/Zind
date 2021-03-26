@@ -47,6 +47,7 @@
 
 - (void)runEngine {
 	ZIND_LIFE_CYCLE_LOGGER
+	[self.engine ensureSemanticsEnabled];
 	[self.engine runWithEntrypoint:self.entryPoint initialRoute:self.initialRoute];
 	[self setupLifeCycle:ZindEngineMemberLifeCycleRunning];
 }

@@ -35,7 +35,7 @@ class PopUpApp extends StatelessWidget {
 
   PopUpApp() {
     print("PopUpApp initialRoute: ${ui.window.defaultRouteName}");
-    ZindRouteModel routeModel = ZindRouteModel();
+    ZindRouteModel routeModel = ZindRouteModel.defaultModel();
     try {
       routeModel = ZindRouteModel.fromJson(ui.window.defaultRouteName);
     } catch (e) {
@@ -62,7 +62,7 @@ class ShareApp extends StatelessWidget {
 
   ShareApp() {
     print("ShareApp initialRoute: ${ui.window.defaultRouteName}");
-    ZindRouteModel routeModel = ZindRouteModel();
+    ZindRouteModel routeModel = ZindRouteModel.defaultModel();
     try {
       routeModel = ZindRouteModel.fromJson(ui.window.defaultRouteName);
     } catch (e) {
@@ -86,14 +86,15 @@ class BaseApp extends StatelessWidget {
 
   BaseApp() {
     print("initialRoute: ${ui.window.defaultRouteName}");
+    ZindRouteModel routeModel = ZindRouteModel.defaultModel();
     try {
-      ZindRouteModel routeModel = ZindRouteModel.fromJson(ui.window.defaultRouteName);
-      _app = ZindApp(routeModel: routeModel, pageRoutes: _pageRoutes);
+      routeModel = ZindRouteModel.fromJson(ui.window.defaultRouteName);
     } catch (e) {
       print("decode initialRoute exception: $e");
     } finally {
       print("finally error");
     }
+    _app = ZindApp(routeModel: routeModel, pageRoutes: _pageRoutes);
   }
 
   @override

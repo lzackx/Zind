@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,8 @@ typedef RouteUpdatePageHandler = void Function(ZindRouteModel routeModel);
 
 class ZindPlugin {
   static const MethodChannel _zind_channel = const MethodChannel('com.zind.engine.channel');
-  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>(debugLabel: "com.zind.key.navigator");
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>(debugLabel: "com.zind.key.Navigator");
+  static GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>(debugLabel: "com.zind.key.ScaffoldMessenger");
 
   static RoutePushPageHandler _routePushPageHandler;
   static RoutePopPageHandler _routePopPageHandler;
@@ -79,6 +81,7 @@ class ZindPlugin {
 
   static void updatePage(ZindRouteModel routeModel) {
     print("flutter updatePage ${routeModel.toJson()}");
+    print("default route name: ${ui.window.defaultRouteName}");
     if (_routeUpdatePageHandler != null) {
       print("routeUpdatePageHandler ${routeModel.toJson()}");
       _routeUpdatePageHandler(routeModel);

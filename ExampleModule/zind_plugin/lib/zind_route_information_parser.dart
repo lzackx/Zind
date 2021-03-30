@@ -8,14 +8,6 @@ class ZindRouteInformationParser extends RouteInformationParser<ZindRouteModel> 
     print("parseRouteInformation: ${routeInformation.state} ${routeInformation.location}}");
     ZindRouteModel routeModel = ZindRouteModel.defaultModel();
     routeModel.url = routeInformation.location;
-    // try {
-    //   if (routeInformation.state != null) {
-    //     print("parseRouteInformation: ZindRouteModel => ${routeInformation.state}");
-    //     routeModel = ZindRouteModel.fromJson(routeInformation.state);
-    //   }
-    // } catch (e) {
-    //   print("parseRouteInformation exception: $e");
-    // }
     return SynchronousFuture(routeModel);
   }
 

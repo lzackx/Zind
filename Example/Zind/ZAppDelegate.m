@@ -16,7 +16,7 @@
 	
 //	[[NSBundle bundleWithPath:@"/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle"] load];
 	
-	[self initPopUpEngine];
+//	[self initPopUpEngine];
 	
 	return YES;
 }
@@ -59,7 +59,6 @@
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[[[ZindEngineManager shared] createEngineMemberWithType:@"ZindPopUpViewController"
 													 entryPoint:@"popup"
-												   initialRoute:@"/"
 												   shouldRetain:YES]
 		 runEngine];
 	});

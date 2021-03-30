@@ -17,6 +17,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, ZindRouteModelRouterType) {
+	ZindRouteModelRouterTypeGeneral,
+	ZindRouteModelRouterTypeShared,
+	ZindRouteModelRouterTypePopUp,
+	ZindRouteModelRouterTypeStack,
+};
+
 FOUNDATION_EXPORT const NSString * const ZindDefaultRouteModelString;
 
 @interface ZindRouteModel : NSObject
@@ -30,8 +37,9 @@ FOUNDATION_EXPORT const NSString * const ZindDefaultRouteModelString;
 @end
 
 @interface ZindPublic : NSObject
+@property (nonatomic, strong) NSNumber *routerType;
 @property (nonatomic, copy)   NSString *app;
-@property (nonatomic, copy)   NSString *environment;
+@property (nonatomic, strong) NSNumber *environment;
 @property (nonatomic, copy)   NSString *muid;
 @property (nonatomic, copy)   NSString *platform;
 @property (nonatomic, strong) NSNumber *safeareaTop;

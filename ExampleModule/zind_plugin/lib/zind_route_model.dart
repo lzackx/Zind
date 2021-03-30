@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 
 class ZindRouteModel {
   ZindRouteModel({
@@ -12,7 +13,7 @@ class ZindRouteModel {
   });
 
   String url;
-  Parameters parameters;
+  ZindParameters parameters;
 
   factory ZindRouteModel.fromJson(String str) => ZindRouteModel.fromMap(json.decode(str));
 
@@ -20,7 +21,7 @@ class ZindRouteModel {
 
   factory ZindRouteModel.fromMap(Map<String, dynamic> json) => ZindRouteModel(
         url: json["url"] == null ? null : json["url"],
-        parameters: json["parameters"] == null ? null : Parameters.fromMap(json["parameters"]),
+        parameters: json["parameters"] == null ? null : ZindParameters.fromMap(json["parameters"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -30,28 +31,28 @@ class ZindRouteModel {
 
   factory ZindRouteModel.defaultModel() {
     String defaultJSON = """
-    {\"url\":\"/\",\"parameters\":{\"public\":{\"app\":\"\",\"environment\":\"\",\"muid\":\"\",\"platform\":\"\",\"safearea_top\":0,\"safearea_bottom\":0,\"version\":\"\",\"system_version\":\"\",\"ua\":\"\"},\"private\":{}}}
+    {\"url\":\"/\",\"parameters\":{\"public\":{\"router_type\":0,\"app\":\"\",\"environment\":0,\"muid\":\"\",\"platform\":\"\",\"safearea_top\":0,\"safearea_bottom\":0,\"version\":\"\",\"system_version\":\"\",\"ua\":\"\"},\"private\":{}}}
     """;
     return ZindRouteModel.fromJson(defaultJSON);
   }
 }
 
-class Parameters {
-  Parameters({
+class ZindParameters {
+  ZindParameters({
     this.public,
     this.private,
   });
 
-  Public public;
-  Private private;
+  ZindPublic public;
+  ZindPrivate private;
 
-  factory Parameters.fromJson(String str) => Parameters.fromMap(json.decode(str));
+  factory ZindParameters.fromJson(String str) => ZindParameters.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Parameters.fromMap(Map<String, dynamic> json) => Parameters(
-        public: json["public"] == null ? null : Public.fromMap(json["public"]),
-        private: json["private"] == null ? null : Private.fromMap(json["private"]),
+  factory ZindParameters.fromMap(Map<String, dynamic> json) => ZindParameters(
+        public: json["public"] == null ? null : ZindPublic.fromMap(json["public"]),
+        private: json["private"] == null ? null : ZindPrivate.fromMap(json["private"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -60,70 +61,81 @@ class Parameters {
       };
 }
 
-class Private {
-  Private();
+class ZindPrivate {
+  ZindPrivate();
 
-  factory Private.fromJson(String str) => Private.fromMap(json.decode(str));
+  factory ZindPrivate.fromJson(String str) => ZindPrivate.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Private.fromMap(Map<String, dynamic> json) => Private();
+  factory ZindPrivate.fromMap(Map<String, dynamic> json) => ZindPrivate();
 
   Map<String, dynamic> toMap() => {};
 }
 
-class Public {
-  Public({
-    this.ver,
+class ZindPublic {
+  ZindPublic({
+    this.routerType,
+    this.app,
+    this.environment,
     this.muid,
-    this.source,
-    this.sysVer,
-    this.sysType,
-    this.ua,
-    this.isDev,
-    this.channel,
+    this.platform,
     this.safeareaTop,
     this.safeareaBottom,
+    this.version,
+    this.systemVersion,
+    this.ua,
   });
 
-  String ver;
+  int routerType;
+  String app;
+  int environment;
   String muid;
-  String source;
-  String sysVer;
-  String sysType;
-  String ua;
-  String isDev;
-  String channel;
+  String platform;
   int safeareaTop;
   int safeareaBottom;
+  String version;
+  String systemVersion;
+  String ua;
 
-  factory Public.fromJson(String str) => Public.fromMap(json.decode(str));
-
+  factory ZindPublic.fromJson(String str) => ZindPublic.fromMap(json.decode(str));
   String toJson() => json.encode(toMap());
-
-  factory Public.fromMap(Map<String, dynamic> json) => Public(
-        ver: json["_ver"] == null ? null : json["_ver"],
-        muid: json["_muid"] == null ? null : json["_muid"],
-        source: json["_source"] == null ? null : json["_source"],
-        sysVer: json["_sys_ver"] == null ? null : json["_sys_ver"],
-        sysType: json["_sys_type"] == null ? null : json["_sys_type"],
-        ua: json["_ua"] == null ? null : json["_ua"],
-        isDev: json["_isDev"] == null ? null : json["_isDev"],
-        channel: json["_channel"] == null ? null : json["_channel"],
-        safeareaTop: json["_safearea_top"] == null ? null : json["_safearea_top"],
-        safeareaBottom: json["_safearea_bottom"] == null ? null : json["_safearea_bottom"],
+  factory ZindPublic.fromMap(Map<String, dynamic> json) => ZindPublic(
+        routerType: json["router_type"] == null ? 0 : json["router_type"],
+        app: json["app"] == null ? null : json["app"],
+        environment: json["environment"] == null ? 1 : json["environment"],
+        muid: json["muid"] == null ? null : json["muid"],
+        platform: json["platform"] == null ? null : json["platform"],
+        safeareaTop: json["safearea_top"] == null ? null : json["safearea_top"],
+        safeareaBottom: json["safearea_bottom"] == null ? null : json["safearea_bottom"],
+        version: json["version"] == null ? null : json["version"],
+        systemVersion: json["system_version"] == null ? null : json["system_version"],
+        ua: json["ua"] == null ? null : json["ua"],
       );
-
   Map<String, dynamic> toMap() => {
-        "_ver": ver == null ? null : ver,
-        "_muid": muid == null ? null : muid,
-        "_source": source == null ? null : source,
-        "_sys_ver": sysVer == null ? null : sysVer,
-        "_sys_type": sysType == null ? null : sysType,
-        "_ua": ua == null ? null : ua,
-        "_isDev": isDev == null ? null : isDev,
-        "_channel": channel == null ? null : channel,
-        "_safearea_top": safeareaTop == null ? null : safeareaTop,
-        "_safearea_bottom": safeareaBottom == null ? null : safeareaBottom,
+        "router_type": routerType == null ? 0 : routerType,
+        "app": app == null ? null : app,
+        "environment": environment == null ? 1 : environment,
+        "muid": muid == null ? null : muid,
+        "platform": platform == null ? null : platform,
+        "safearea_top": safeareaTop == null ? 0 : safeareaTop,
+        "safearea_bottom": safeareaBottom == null ? 0 : safeareaBottom,
+        "version": version == null ? null : version,
+        "system_version": systemVersion == null ? null : systemVersion,
+        "ua": ua == null ? null : ua,
       };
+
+  final List<String> _routerTypeSting = [
+    "General", // 0
+    "Shared",  // 1
+    "PopUp",  // 2
+    "Stack",  // 3
+  ];
+  String get currentRouterType => this._routerTypeSting[this.routerType];
+
+  final List<String> _environment = [
+    "debug",
+    "release",
+  ];
+  String get currentEnvironment => this._environment[this.environment];
 }

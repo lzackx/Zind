@@ -63,6 +63,7 @@ class ShareApp extends StatelessWidget {
   ShareApp() {
     print("ShareApp initialRoute: ${ui.window.defaultRouteName}");
     ZindRouteModel routeModel = ZindRouteModel.defaultModel();
+    routeModel.url = "/home";
     try {
       routeModel = ZindRouteModel.fromJson(ui.window.defaultRouteName);
     } catch (e) {

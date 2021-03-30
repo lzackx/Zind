@@ -33,7 +33,6 @@
 	
 	[ZindContainerFactory showPopUpViewControllerWithFromViewController:self
 															 EntryPoint:@"popup"
-														   initialRoute:nil
 																   Page:page
 															 completion:^{
 		NSLog(@"Pop Up Shown");

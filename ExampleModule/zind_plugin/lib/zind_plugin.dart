@@ -14,12 +14,14 @@ typedef RouteUpdatePageHandler = void Function(ZindRouteModel routeModel);
 
 class ZindPlugin {
   static const MethodChannel _zind_channel = const MethodChannel('com.zind.engine.channel');
+  static GlobalKey appKey = GlobalKey(debugLabel: "com.zind.key.Router");
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>(debugLabel: "com.zind.key.Navigator");
   static GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>(debugLabel: "com.zind.key.ScaffoldMessenger");
 
   static RoutePushPageHandler _routePushPageHandler;
   static RoutePopPageHandler _routePopPageHandler;
-  static RouteUpdatePageHandler _routeUpdatePageHandler;
+  static RouteUpdatePageHandler _routeUpdateRoutePageHandler;
+  static RouteUpdatePageHandler _routeUpdateNavigatorPageHandler;
 
   static void setupChannel() {
     print("ZindPlugin setupChannel");
@@ -29,11 +31,13 @@ class ZindPlugin {
   static void setupRouteHandler(
       {@required RoutePushPageHandler routePushPageHandler,
       @required RoutePopPageHandler routePopPageHandler,
-      @required RouteUpdatePageHandler routeUpdatePageHandler}) {
+      @required RouteUpdatePageHandler routeUpdateRoutePageHandler,
+        @required RouteUpdatePageHandler routeUpdateNavigatorPageHandler}) {
     print("ZindPlugin setupRouteHandler");
     _routePushPageHandler = routePushPageHandler;
     _routePopPageHandler = routePopPageHandler;
-    _routeUpdatePageHandler = routeUpdatePageHandler;
+    _routeUpdateRoutePageHandler = routeUpdateRoutePageHandler;
+    _routeUpdateNavigatorPageHandler = routeUpdateNavigatorPageHandler;
   }
 
   static Future<dynamic> _handleChannelMethodCall(MethodCall call) async {
@@ -50,8 +54,11 @@ class ZindPlugin {
         case "popPage":
           ZindPlugin.popPage(routeModel);
           break;
-        case "updatePage":
-          ZindPlugin.updatePage(routeModel);
+        case "updateRoutePage":
+          ZindPlugin.updateRoutePage(routeModel);
+          break;
+        case "updateNavigatorPage":
+          ZindPlugin.updateNavigatorPage(routeModel);
           break;
         default:
           return Future.value({"state": "101", "message": "wrong method"});
@@ -66,7 +73,7 @@ class ZindPlugin {
   static void pushPage(ZindRouteModel routeModel) {
     print("flutter pushPage ${routeModel.toJson()}");
     if (_routePushPageHandler != null) {
-      print("routeUpdatePageHandler ${routeModel.toJson()}");
+      print("routePushPageHandler ${routeModel.toJson()}");
       _routePushPageHandler(routeModel);
     }
   }
@@ -74,17 +81,25 @@ class ZindPlugin {
   static void popPage(ZindRouteModel routeModel) {
     print("flutter popPage ${routeModel.toJson()}");
     if (_routePopPageHandler != null) {
-      print("routeUpdatePageHandler ${routeModel.toJson()}");
+      print("routePopPageHandler ${routeModel.toJson()}");
       _routePopPageHandler(routeModel);
     }
   }
 
-  static void updatePage(ZindRouteModel routeModel) {
+  static void updateRoutePage(ZindRouteModel routeModel) {
     print("flutter updatePage ${routeModel.toJson()}");
-    print("default route name: ${ui.window.defaultRouteName}");
-    if (_routeUpdatePageHandler != null) {
-      print("routeUpdatePageHandler ${routeModel.toJson()}");
-      _routeUpdatePageHandler(routeModel);
+    if (_routeUpdateRoutePageHandler != null) {
+      print("routeUpdateRoutePageHandler ${routeModel.toJson()}");
+      _routeUpdateRoutePageHandler(routeModel);
     }
   }
+  
+  static void updateNavigatorPage(ZindRouteModel routeModel) {
+    print("flutter updatePage ${routeModel.toJson()}");
+    if (_routeUpdateNavigatorPageHandler != null) {
+      print("routeUpdateNavigatorPageHandler ${routeModel.toJson()}");
+      _routeUpdateNavigatorPageHandler(routeModel);
+    }
+  }
+  
 }

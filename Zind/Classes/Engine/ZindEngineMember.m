@@ -20,15 +20,13 @@
 
 #pragma mark - Life Cycle
 - (instancetype)initWithEngine:(FlutterEngine *)engine
-					entryPoint:(NSString *)entryPoint
-				  initialRoute:(NSString *)initialRoute {
+					entryPoint:(NSString *)entryPoint {
 	self = [super init];
 	ZIND_LIFE_CYCLE_LOGGER
 	if (self) {
 		_engine = engine;
 		_engine.engineMember = self;
 		_entryPoint = entryPoint;
-		_initialRoute = initialRoute;
 		_lifeCycleLock = [[NSLock alloc] init];
 		_shouldRetained = NO;
 		[self registerPlugins];
@@ -48,7 +46,7 @@
 - (void)runEngine {
 	ZIND_LIFE_CYCLE_LOGGER
 	[self.engine ensureSemanticsEnabled];
-	[self.engine runWithEntrypoint:self.entryPoint initialRoute:self.initialRoute];
+	[self.engine runWithEntrypoint:self.entryPoint];
 	[self setupLifeCycle:ZindEngineMemberLifeCycleRunning];
 }
 
@@ -96,49 +94,66 @@
 
 - (void)pushPage:(NSString *)page {
 	ZIND_LIFE_CYCLE_LOGGER
-	NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
-	[arguments setObject:page forKey:@"url"];
-	[arguments setObject:@{@"public":@{}, @"private":@{}} forKey:@"parameters"];
-	NSString *argumentsJSON = [self serializeArguments:arguments];
-	if (argumentsJSON == nil) {
-		return;
-	}
-	[self.memberChannel invokeMethod:@"pushPage"
-						   arguments:argumentsJSON
-							  result:^(id  _Nullable result) {
-		NSLog(@"invokeMethod pushPage");
-		NSLog(@"result: %@", result);
-	}];
+//	NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+//	[arguments setObject:page forKey:@"url"];
+//	[arguments setObject:@{@"public":@{}, @"private":@{}} forKey:@"parameters"];
+//	NSString *argumentsJSON = [self serializeArguments:arguments];
+//	if (argumentsJSON == nil) {
+//		return;
+//	}
+//	[self.memberChannel invokeMethod:@"pushPage"
+//						   arguments:argumentsJSON
+//							  result:^(id  _Nullable result) {
+//		NSLog(@"invokeMethod pushPage");
+//		NSLog(@"result: %@", result);
+//	}];
 }
 
 - (void)popPage:(NSString *)page {
 	ZIND_LIFE_CYCLE_LOGGER
-	NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
-	[arguments setObject:page forKey:@"url"];
-	[arguments setObject:@{@"public":@{}, @"private":@{}} forKey:@"parameters"];
-	NSString *argumentsJSON = [self serializeArguments:arguments];
-	if (argumentsJSON == nil) {
+//	NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+//	[arguments setObject:page forKey:@"url"];
+//	[arguments setObject:@{@"public":@{}, @"private":@{}} forKey:@"parameters"];
+//	NSString *argumentsJSON = [self serializeArguments:arguments];
+//	if (argumentsJSON == nil) {
+//		return;
+//	}
+//	[self.memberChannel invokeMethod:@"popPage"
+//						   arguments:argumentsJSON
+//							  result:^(id  _Nullable result) {
+//		NSLog(@"invokeMethod popPage");
+//		NSLog(@"result: %@", result);
+//	}];
+}
+
+- (void)updateRoutePage:(NSString *)page {
+	ZIND_LIFE_CYCLE_LOGGER
+	ZindRouteModel *routeModel = [ZindRouteModel yy_modelWithJSON:ZindDefaultRouteModelString];
+	routeModel.url = page;
+	routeModel.parameters.public.routerType = [NSNumber numberWithUnsignedInteger:ZindRouteModelRouterTypeShared];
+	if (routeModel == nil) {
 		return;
 	}
-	[self.memberChannel invokeMethod:@"popPage"
-						   arguments:argumentsJSON
+	[self.memberChannel invokeMethod:@"updateRoutePage"
+						   arguments:[routeModel yy_modelToJSONString]
 							  result:^(id  _Nullable result) {
-		NSLog(@"invokeMethod popPage");
+		NSLog(@"invokeMethod updateRoutePage");
 		NSLog(@"result: %@", result);
 	}];
 }
 
-- (void)updatePage:(NSString *)page {
+- (void)updateNavigatorPage:(NSString *)page {
 	ZIND_LIFE_CYCLE_LOGGER
 	ZindRouteModel *routeModel = [ZindRouteModel yy_modelWithJSON:ZindDefaultRouteModelString];
 	routeModel.url = page;
+	routeModel.parameters.public.routerType = [NSNumber numberWithUnsignedInteger:ZindRouteModelRouterTypePopUp];
 	if (routeModel == nil) {
 		return;
 	}
-	[self.memberChannel invokeMethod:@"updatePage"
+	[self.memberChannel invokeMethod:@"updateNavigatorPage"
 						   arguments:[routeModel yy_modelToJSONString]
 							  result:^(id  _Nullable result) {
-		NSLog(@"invokeMethod updatePage");
+		NSLog(@"invokeMethod updateNavigatorPage");
 		NSLog(@"result: %@", result);
 	}];
 }

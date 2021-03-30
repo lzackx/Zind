@@ -18,7 +18,6 @@
 #pragma mark - Base
 + (ZindBaseContainer *)createContainerWithContainerClass:(Class)containerClass
 											  entryPoint:(nullable NSString *)entryPoint
-											initialRoute:(nullable NSString *)initialRoute
 												  preRun:(BOOL)preRun {
 	
 	ZindBaseContainer *container = (ZindBaseContainer *)[containerClass alloc];
@@ -28,8 +27,7 @@
 	ZindEngineMember *engineMember = [engineManager getEngineWithType:type];
 	if (engineMember == nil) {
 		engineMember = [engineManager createEngineMemberWithType:type
-													  entryPoint:entryPoint
-													initialRoute:initialRoute];
+													  entryPoint:entryPoint];
 	}
 	container = ((id (*)(id, SEL, FlutterEngine*))objc_msgSend)(container, selector, engineMember.engine);
 	if (container == nil) {
@@ -61,7 +59,6 @@
 
 #pragma mark - PopUp
 + (ZindPopUpViewController *)createPopUpViewControllerWithEntryPoint:(NSString *)entryPoint
-														initialRoute:(nullable NSString *)initialRoute
 																Page:(NSString *)page
 															  preRun:(BOOL)preRun {
 	NSString *type = @"ZindPopUpViewController";
@@ -69,10 +66,9 @@
 	if (engineMember == nil) {
 		engineMember = [[ZindEngineManager shared] createEngineMemberWithType:type
 																   entryPoint:entryPoint
-																 initialRoute:initialRoute
 																 shouldRetain:YES];
 	}
-	[engineMember.engine runWithEntrypoint:entryPoint initialRoute:initialRoute];
+	[engineMember.engine runWithEntrypoint:entryPoint];
 	ZindPopUpViewController *popUpVC = (ZindPopUpViewController *)[ZindContainerFactory createContainerWithContainerClass:NSClassFromString(@"ZindPopUpViewController")
 																											 engineMember:engineMember
 																												   preRun:preRun];
@@ -82,17 +78,15 @@
 
 + (void)showPopUpViewControllerWithFromViewController:(UIViewController *)fromViewController
 										   EntryPoint:(NSString *)entryPoint
-										 initialRoute:(nullable NSString *)initialRoute
 												 Page:(NSString *)page
 										   completion:(void (^ __nullable)(void))completion {
 	if (fromViewController == nil) {
 		return;
 	}
 	ZindPopUpViewController *popUpVC = [ZindContainerFactory createPopUpViewControllerWithEntryPoint:entryPoint
-																						initialRoute:initialRoute
 																								Page:page
 																							  preRun:YES];
-	[popUpVC.engine.engineMember updatePage:page];
+	[popUpVC.engine.engineMember updateNavigatorPage:page];
 	[fromViewController presentViewController:popUpVC animated:NO completion:completion];
 }
 

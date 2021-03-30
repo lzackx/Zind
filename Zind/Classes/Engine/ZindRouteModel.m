@@ -14,8 +14,9 @@ const NSString * _Nonnull const ZindDefaultRouteModelString = @""
 "	\"url\": \"\","
 "	\"parameters\": {"
 "		\"public\": {"
+"			\"router_type\": 0,"
 "			\"app\": \"\","
-"			\"environment\": \"\","
+"			\"environment\": 0,"
 "			\"muid\": \"\","
 "			\"platform\": \"\","
 "			\"safearea_top\": 0,"
@@ -36,5 +37,13 @@ const NSString * _Nonnull const ZindDefaultRouteModelString = @""
 @end
 
 @implementation ZindPublic
++ (NSDictionary *)modelCustomPropertyMapper {
+	return @{
+		@"routerType": @"router_type",
+		@"safeareaTop": @"safearea_top",
+		@"safeareaBottom": @"safearea_bottom",
+		@"systemVersion": @"system_version",
+	};
+}
 @end
 

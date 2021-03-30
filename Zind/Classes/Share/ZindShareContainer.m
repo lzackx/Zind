@@ -82,7 +82,7 @@
 		self.shareVC.view.frame = self.view.bounds;
 //	}
 	[self.view addSubview:self.shareVC.view];
-	[self.shareVC.engine.engineMember updatePage:[self.url copy]];
+	[self.shareVC.engine.engineMember updateRoutePage:[self.url copy]];
 }
 
 @end

@@ -35,7 +35,6 @@
 	
 	self.shareVC = (ZindShareViewController*)[ZindContainerFactory createContainerWithContainerClass:NSClassFromString(@"ZindShareViewController")
 																						  entryPoint:@"shared"
-																						initialRoute:[routeModel yy_modelToJSONString]
 																							  preRun:YES];
 	self.shareVC.view.backgroundColor = [UIColor whiteColor];
 	ZindShareContainer *shareContainer1 = [[ZindShareContainer alloc] initWithShareVC:self.shareVC url:@"/home"];

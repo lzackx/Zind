@@ -42,20 +42,17 @@
 
 #pragma mark - Engin Members
 - (ZindEngineMember *)createEngineMemberWithType:(NSString *)type
-									  entryPoint:(nonnull NSString *)entryPoint
-									initialRoute:(nonnull NSString *)initialRoute {
-	return [self createEngineMemberWithType:type entryPoint:entryPoint initialRoute:initialRoute shouldRetain:NO];
+									  entryPoint:(nonnull NSString *)entryPoint {
+	return [self createEngineMemberWithType:type entryPoint:entryPoint shouldRetain:NO];
 }
 
 - (ZindEngineMember *)createEngineMemberWithType:(NSString *)type
 									  entryPoint:(nonnull NSString *)entryPoint
-									initialRoute:(nonnull NSString *)initialRoute
 									shouldRetain:(BOOL)shouldRetain {
 	ZIND_LIFE_CYCLE_LOGGER
 	FlutterEngine *engine = [self.engineGroup makeEngineWithEntrypoint:entryPoint libraryURI:nil];
 	ZindEngineMember *engineMember = [[ZindEngineMember alloc] initWithEngine:engine
-																   entryPoint:entryPoint
-																 initialRoute:initialRoute];
+																   entryPoint:entryPoint];
 	engineMember.type = type;
 	engineMember.shouldRetained = shouldRetain;
 	[self.emLock lock];

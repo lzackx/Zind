@@ -16,12 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)shared;
 
 - (ZindEngineMember *)createEngineMemberWithType:(NSString *)type
-									  entryPoint:(nonnull NSString *)entryPoint
-									initialRoute:(nonnull NSString *)initialRoute;
+									  entryPoint:(nonnull NSString *)entryPoint;
 
 - (ZindEngineMember *)createEngineMemberWithType:(NSString *)type
 									  entryPoint:(nonnull NSString *)entryPoint
-									initialRoute:(nonnull NSString *)initialRoute
 									shouldRetain:(BOOL)shouldRetain;
 
 - (ZindEngineMember *)getEngineWithType:(NSString *)type;

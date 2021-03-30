@@ -20,12 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, strong) FlutterEngine *engine;
 @property (nonatomic, readwrite, copy) NSString *type;
 @property (nonatomic, readonly, copy) NSString *entryPoint;
-@property (nonatomic, readonly, copy) NSString *initialRoute;
 @property (nonatomic, readwrite, assign) BOOL shouldRetained;
 
 - (instancetype)initWithEngine:(FlutterEngine *)engine
-					entryPoint:(NSString *)entryPoint
-				  initialRoute:(NSString *)initialRoute;
+					entryPoint:(NSString *)entryPoint;
 
 - (void)setupLifeCycle:(ZindEngineMemberLifeCycle)lifeCycle;
 - (void)runEngine;
@@ -37,8 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Page
 - (void)pushPage:(NSString *)page;
 - (void)popPage:(NSString *)page;
-- (void)updatePage:(NSString *)page;
-
+- (void)updateRoutePage:(NSString *)page;
+- (void)updateNavigatorPage:(NSString *)page;
 
 @end
 

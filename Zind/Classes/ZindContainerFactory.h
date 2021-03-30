@@ -19,7 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (ZindBaseContainer *)createContainerWithContainerClass:(Class)containerClass
 											  entryPoint:(nullable NSString *)entryPoint
-											initialRoute:(nullable NSString *)initialRoute
 												  preRun:(BOOL)preRun;
 
 
@@ -28,13 +27,11 @@ NS_ASSUME_NONNULL_BEGIN
 												  preRun:(BOOL)preRun;
 
 + (ZindPopUpViewController *)createPopUpViewControllerWithEntryPoint:(NSString *)entryPoint
-														initialRoute:(nullable NSString *)initialRoute
 																Page:(NSString *)page
 															  preRun:(BOOL)preRun;
 
 + (void)showPopUpViewControllerWithFromViewController:(UIViewController *)fromViewController
 										   EntryPoint:(NSString *)entryPoint
-										 initialRoute:(nullable NSString *)initialRoute
 												 Page:(NSString *)page
 										   completion:(void (^ __nullable)(void))completion;
 @end

@@ -14,7 +14,7 @@ typedef RouteUpdatePageHandler = void Function(ZindRouteModel routeModel);
 
 class ZindPlugin {
   static const MethodChannel _zind_channel = const MethodChannel('com.zind.engine.channel');
-  static GlobalKey appKey = GlobalKey(debugLabel: "com.zind.key.Router");
+  static GlobalKey appKey = GlobalKey(debugLabel: "com.zind.key.App");
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>(debugLabel: "com.zind.key.Navigator");
   static GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>(debugLabel: "com.zind.key.ScaffoldMessenger");
 

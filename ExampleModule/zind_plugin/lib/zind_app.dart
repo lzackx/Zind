@@ -42,7 +42,7 @@ class ZindApp {
       PageRouteBuilder(
         settings: RouteSettings(
           name: routeModel.url,
-          arguments: routeModel.parameters.private.toMap(),
+          arguments: routeModel,
         ),
         pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
           Widget page = _pageRoutes[routeModel.url](context);
@@ -59,7 +59,7 @@ class ZindApp {
 
   void _handleRouteUpdateRoutePage(ZindRouteModel routeModel) {
     print("handleRouteUpdateRoutePage: ${(ZindPlugin.appKey.currentWidget as MaterialApp).routerDelegate}");
-    ((ZindPlugin.appKey.currentWidget as MaterialApp).routerDelegate as ZindRouterDelegate).updatePage(routeModel);
+    ((ZindPlugin.appKey.currentWidget as MaterialApp).routerDelegate as ZindRouterDelegate).updateRouteModel(routeModel);
   }
 
   void _handleRouteUpdateNavigatorPage(ZindRouteModel routeModel) {
@@ -67,13 +67,11 @@ class ZindApp {
     Navigator.pushReplacement(
       ZindPlugin.navigatorKey.currentContext,
       PageRouteBuilder(
-        settings: RouteSettings(
-          name: routeModel.url,
-          arguments: routeModel.parameters.private.toMap(),
-        ),
+        settings: RouteSettings(name: routeModel.url, arguments: routeModel),
         pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-          print("pushReplacement ${routeModel.toJson()}");
-          Widget page = _pageRoutes[routeModel.url](context);
+          String routeName = routeModel.url;
+          Widget page = _pageRoutes[routeName](context);
+          print("generate MaterialPageRoute: $routeName");
           return page;
         },
       ),
@@ -106,63 +104,59 @@ class ZindApp {
   }
 
   ZindRouterDelegate _defaultRouteDelegate(BuildContext context) {
-    // List<Page<dynamic>> pages = _pageRoutes.map((route, builder) {
-    //   return MaterialPage(name:name, child: builder(context));
-    // });
-    List<Page<dynamic>> pages = [];
-    _pageRoutes.forEach((String name, WidgetBuilder builder) {
-      MaterialPage page = MaterialPage(name: name, child: builder(context));
-      pages.add(page);
-    });
-
     Navigator navigator = Navigator(
       key: ZindPlugin.navigatorKey,
       initialRoute: _routeModel.url,
-      pages: pages,
       onGenerateInitialRoutes: _onGenerateInitialRoutes,
       onGenerateRoute: _onGenerateRoute,
       onUnknownRoute: _onUnknownRoute,
     );
-    ZindRouterDelegate routerDelegate = ZindRouterDelegate(initialRouteModel: _routeModel, navigator: navigator, pageRoutes: _pageRoutes);
+    ZindRouterDelegate routerDelegate = ZindRouterDelegate(initialRouteModel: _routeModel, navigator: navigator);
     return routerDelegate;
   }
-
-  // ZindRouterDelegate _defaultRouteDelegate(BuildContext context) {
-  //   Navigator navigator = Navigator(
-  //     key: ZindPlugin.navigatorKey,
-  //     initialRoute: _routeModel.url,
-  //     onGenerateInitialRoutes: _onGenerateInitialRoutes,
-  //     onGenerateRoute: _onGenerateRoute,
-  //     onUnknownRoute: _onUnknownRoute,
-  //   );
-  //   ZindRouterDelegate routerDelegate = ZindRouterDelegate(initialRouteModel: _routeModel, navigator: navigator);
-  //   return routerDelegate;
-  // }
 
   /// default Navigator methods
   List<Route<dynamic>> _onGenerateInitialRoutes(NavigatorState navigator, String initialRouteName) {
     final List<Route<dynamic>> result = <Route<dynamic>>[];
     print("_onGenerateInitialRoutes: $initialRouteName");
     // Only add 1 route, because the stack of route is not managed by "/"
-    RouteSettings routeSettings = RouteSettings(name: initialRouteName, arguments: _routeModel);
-    Route<dynamic> pageRoute = navigator.widget.onGenerateRoute(routeSettings);
-    result.add(pageRoute);
+    Route<dynamic> initialRoute;
+    if (_pageRoutes.keys.contains(initialRouteName) == false) {
+      print("_pageRoutes don't contain $initialRouteName");
+      RouteSettings routeSettings = RouteSettings(name: initialRouteName, arguments: _routeModel);
+      initialRoute = navigator.widget.onUnknownRoute(routeSettings);
+    } else {
+      RouteSettings routeSettings = RouteSettings(name: initialRouteName, arguments: _routeModel);
+      initialRoute = navigator.widget.onGenerateRoute(routeSettings);
+    }
+    result.add(initialRoute);
     return result.cast<Route<dynamic>>();
   }
 
   Route<dynamic> _onGenerateRoute(RouteSettings settings) {
-    print("_onGenerateRoute: ${settings.toString()}");
+    print("_onGenerateRoute: ${settings.name}");
     final String name = settings.name;
     if (_pageRoutes.keys.contains(name) == false) {
+      print("_pageRoutes don't contain $name");
       return null;
     }
-    final Route<dynamic> route = MaterialPageRoute(
+    // final Route<dynamic> route = MaterialPageRoute(
+    //   settings: settings,
+    //   maintainState: true,
+    //   fullscreenDialog: true,
+    //   builder: (BuildContext context) {
+    //     String routeName = ((ZindPlugin.appKey.currentWidget as MaterialApp).routerDelegate as ZindRouterDelegate).currentConfiguration.url;
+    //     Widget page = _pageRoutes[routeName](context);
+    //     print("generate MaterialPageRoute: $routeName");
+    //     return page;
+    //   },
+    // );
+    final Route<dynamic> route = PageRouteBuilder(
       settings: settings,
-      maintainState: true,
-      fullscreenDialog: true,
-      builder: (BuildContext context) {
-        Widget page = _pageRoutes[settings.name](context);
-        print("generate MaterialPageRoute: ${settings.toString()}");
+      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+        String routeName = ((ZindPlugin.appKey.currentWidget as MaterialApp).routerDelegate as ZindRouterDelegate).currentConfiguration.url;
+        Widget page = _pageRoutes[routeName](context);
+        print("generate MaterialPageRoute: $routeName");
         return page;
       },
     );
@@ -172,7 +166,7 @@ class ZindApp {
   Route<dynamic> _onUnknownRoute(RouteSettings settings) {
     print("_onUnknownRoute: $settings");
     return PageRouteBuilder(
-      settings: RouteSettings(name: "Unknown", arguments: _routeModel.parameters),
+      settings: RouteSettings(name: "Unknown", arguments: _routeModel),
       pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
         print("generate UnknownRoute: $settings");
         return ZindAppUnknownPage();
@@ -180,80 +174,3 @@ class ZindApp {
     );
   }
 }
-
-// class ZindApp {
-//   final ZindRouteModel routeModel;
-//   final Map<String, WidgetBuilder> pageRoutes;
-//
-//   ZindApp({@required this.routeModel, @required this.pageRoutes}) {
-//     WidgetsFlutterBinding.ensureInitialized();
-//     ZindPlugin.setupChannel();
-//   }
-//
-//   MaterialApp createApp(BuildContext context) {
-//     ZindPlugin.setupRouteHandler(
-//       routePushPageHandler: (ZindRouteModel routeModel) {
-//         this.handleRoutePushPage(routeModel);
-//       },
-//       routePopPageHandler: (ZindRouteModel routeModel) {
-//         this.handleRoutePopPage(routeModel);
-//       },
-//       routeUpdatePageHandler: (ZindRouteModel routeModel) {
-//         this.handleRouteUpdatePage(routeModel);
-//       },
-//     );
-//     return MaterialApp(
-//       navigatorKey: ZindPlugin.navigatorKey,
-//       initialRoute: routeModel.url,
-//       routes: this.pageRoutes,
-//       onUnknownRoute: (RouteSettings settings) {
-//         print("onUnknownRoute: $settings");
-//         return PageRouteBuilder(
-//           pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-//             return ZindAppUnknownPage();
-//           },
-//         );
-//       },
-//     );
-//   }
-//
-//   void handleRoutePushPage(ZindRouteModel routeModel) {
-//     print("handleRoutePushPage");
-//     Navigator.push(
-//       ZindPlugin.navigatorKey.currentContext,
-//       PageRouteBuilder(
-//         settings: RouteSettings(
-//           name: routeModel.url,
-//           arguments: routeModel.parameters.private.toMap(),
-//         ),
-//         pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-//           Widget page = this.pageRoutes[routeModel.url](context);
-//           return page;
-//         },
-//       ),
-//     );
-//   }
-//
-//   void handleRoutePopPage(ZindRouteModel routeModel) {
-//     print("handleRoutePopPage");
-//     Navigator.pop(ZindPlugin.navigatorKey.currentContext);
-//   }
-//
-//   void handleRouteUpdatePage(ZindRouteModel routeModel) {
-//     print("handleRouteUpdatePage");
-//     Navigator.pushReplacement(
-//       ZindPlugin.navigatorKey.currentContext,
-//       PageRouteBuilder(
-//         settings: RouteSettings(
-//           name: routeModel.url,
-//           arguments: routeModel.parameters.private.toMap(),
-//         ),
-//         pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-//           print("pushReplacement ${routeModel.toJson()}");
-//           Widget page = this.pageRoutes[routeModel.url](context);
-//           return page;
-//         },
-//       ),
-//     );
-//   }
-// }

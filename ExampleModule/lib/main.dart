@@ -9,6 +9,7 @@ import 'package:zind_plugin/zind_app.dart';
 import 'package:zind_module/home.dart';
 import 'package:zind_module/account.dart';
 import 'package:zind_plugin/zind_route_model.dart';
+import 'package:zind_plugin/zind_app_preload_page.dart';
 
 void main() {
   runApp(BaseApp());
@@ -28,6 +29,7 @@ void popup() {
 
 class PopUpApp extends StatelessWidget {
   static Map<String, WidgetBuilder> _pageRoutes = {
+    "/": (BuildContext context) => ZindAppPreloadPage(),
     "/update": (BuildContext context) => Update(),
     "/advertisement": (BuildContext context) => Advertisement(),
   };

@@ -75,12 +75,12 @@
 }
 
 - (void)attachShareVCIfNeeded {
-//	if (self.shareVC.view.superview == self.view) {
-//		return;
-//	} else {
+	if (self.shareVC.view.superview == self.view) {
+		return;
+	} else {
 		[self.shareVC.view removeFromSuperview];
 		self.shareVC.view.frame = self.view.bounds;
-//	}
+	}
 	[self.view addSubview:self.shareVC.view];
 	[self.shareVC.engine.engineMember updateRoutePage:[self.url copy]];
 }

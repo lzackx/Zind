@@ -11,6 +11,8 @@
 
 @interface ZViewController ()
 
+@property (weak, nonatomic) IBOutlet UIButton *button;
+
 @end
 
 @implementation ZViewController
@@ -37,6 +39,12 @@
 															 completion:^{
 		NSLog(@"Pop Up Shown");
 	}];
+}
+
+- (IBAction)touchButton:(id)sender {
+	
+	ZindBaseContainer *container = [ZindContainerFactory createContainerWithContainerClass:[ZindBaseContainer class] entryPoint:@"main" preRun:YES];
+	[self.navigationController pushViewController:container animated:YES];
 }
 
 @end

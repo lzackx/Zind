@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B31D2ABD58B52CB6E2AF39F /* Pods_Zind_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB7155AEC8125A76EEE179CF /* Pods_Zind_Example.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -23,7 +24,6 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		A750D81925FF040A00D235D8 /* ZTabbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = A750D81825FF040A00D235D8 /* ZTabbarController.m */; };
-		C1F47483E67427BD085E1362 /* Pods_Zind_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C7C54D1594B2D00F6828D7 /* Pods_Zind_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,10 +62,10 @@
 		75146987EE60FD874B982DDB /* Zind.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Zind.podspec; path = ../Zind.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7E4310CC00A46D570CA9BD21 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		89C7C54D1594B2D00F6828D7 /* Pods_Zind_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zind_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EA1988AAB48570837827F78 /* Pods-Zind_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zind_Example.debug.xcconfig"; path = "Target Support Files/Pods-Zind_Example/Pods-Zind_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		A750D81725FF040A00D235D8 /* ZTabbarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZTabbarController.h; sourceTree = "<group>"; };
 		A750D81825FF040A00D235D8 /* ZTabbarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZTabbarController.m; sourceTree = "<group>"; };
+		EB7155AEC8125A76EEE179CF /* Pods_Zind_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zind_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +76,7 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				C1F47483E67427BD085E1362 /* Pods_Zind_Example.framework in Frameworks */,
+				2B31D2ABD58B52CB6E2AF39F /* Pods_Zind_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +121,7 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				89C7C54D1594B2D00F6828D7 /* Pods_Zind_Example.framework */,
+				EB7155AEC8125A76EEE179CF /* Pods_Zind_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -201,11 +201,11 @@
 			buildConfigurationList = 6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "Zind_Example" */;
 			buildPhases = (
 				30AFC47476E84A4B91990BAE /* [CP] Check Pods Manifest.lock */,
-				830250282AF2AD7A9FE462E6 /* [CP-User] Run Flutter Build zind_module Script */,
+				0BE15E86B62137743FDACB34 /* [CP-User] Run Flutter Build zind_module Script */,
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
-				81E653C48CB330179DA81FFD /* [CP] Embed Pods Frameworks */,
+				F4777800C27DCE7AC57F285B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -244,6 +244,9 @@
 				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = lzackx;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = UN4656TH2V;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -292,6 +295,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0BE15E86B62137743FDACB34 /* [CP-User] Run Flutter Build zind_module Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "[CP-User] Run Flutter Build zind_module Script";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../ExampleModule/.ios/Flutter/flutter_export_environment.sh\"\nexport VERBOSE_SCRIPT_LOGGING=1 && \"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build\n";
+		};
 		30AFC47476E84A4B91990BAE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -314,7 +327,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		81E653C48CB330179DA81FFD /* [CP] Embed Pods Frameworks */ = {
+		F4777800C27DCE7AC57F285B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -339,16 +352,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Zind_Example/Pods-Zind_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		830250282AF2AD7A9FE462E6 /* [CP-User] Run Flutter Build zind_module Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "[CP-User] Run Flutter Build zind_module Script";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../ExampleModule/.ios/Flutter/flutter_export_environment.sh\"\nexport VERBOSE_SCRIPT_LOGGING=1 && \"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -442,6 +445,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -496,6 +500,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -505,6 +510,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -515,7 +521,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8EA1988AAB48570837827F78 /* Pods-Zind_Example.debug.xcconfig */;
 			buildSettings = {
+				ARCHS = (
+					x86_64,
+					arm64,
+				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = UN4656TH2V;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Zind/Zind-Prefix.pch";
 				INFOPLIST_FILE = "Zind/Zind-Info.plist";
@@ -545,9 +558,21 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EC928EA8E9F09ACF6546747 /* Pods-Zind_Example.release.xcconfig */;
 			buildSettings = {
+				ARCHS = (
+					x86_64,
+					arm64,
+				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = UN4656TH2V;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Zind/Zind-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"FLUTTER_BUILD_MODE=Release",
+				);
 				INFOPLIST_FILE = "Zind/Zind-Info.plist";
 				MODULE_NAME = ExampleApp;
 				OTHER_LDFLAGS = (

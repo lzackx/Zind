@@ -16,7 +16,7 @@
 	
 //	[[NSBundle bundleWithPath:@"/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle"] load];
 	
-	[self initPopUpEngine];
+//	[self initPopUpEngine];
 	
 	return YES;
 }

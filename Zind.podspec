@@ -25,20 +25,22 @@ A framework for Flutter (>= 2.0.0)
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'lzackx' => 'lzackx@lzackx.com' }
   s.source           = { :git => 'https://github.com/lzackx/Zind.git', :tag => s.version.to_s }
-	s.social_media_url = 'https://github.com/lzackx/Zind'
-	# s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-	s.ios.deployment_target = '9.0'
-	s.source_files = [
-	'Zind/Classes/*.{h,m}',
-	'Zind/Classes/Engine/*.{h,m}',
-	'Zind/Classes/Share/*.{h,m}',
-	'Zind/Classes/PopUp/*.{h,m}',
-	]
-	s.public_header_files = 'Zind/Classes/**/*.h'
-	s.dependency 'Flutter'#, '~> 2.0.0'
-	s.dependency 'YYModel'
-	# s.resource_bundles = {
-	#   'Zind' => ['Zind/Assets/*.png']
-	# }
-	# s.frameworks = 'UIKit', 'MapKit'
+  s.social_media_url = 'https://github.com/lzackx/Zind'
+  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.ios.deployment_target = '9.0'
+#  s.static_framework    = true
+  s.frameworks = 'UIKit'
+  s.source_files = [
+  'Zind/Classes/*.{h,m}',
+  'Zind/Classes/Engine/*.{h,m}',
+  'Zind/Classes/Share/*.{h,m}',
+  'Zind/Classes/PopUp/*.{h,m}',
+  ]
+  s.public_header_files = 'Zind/Classes/**/*.h'
+  s.dependency 'Flutter'#, '~> 2.0.0'
+  s.dependency 'YYModel'
+  # s.resource_bundles = {
+  #   'Zind' => ['Zind/Assets/*.png']
+  # }
+  
 end

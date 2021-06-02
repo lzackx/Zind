@@ -1,13 +1,18 @@
-
-use_frameworks!
+source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '9.0'
-
 
 flutter_application_path = '../ExampleModule'
 load File.join(flutter_application_path, '.ios', 'Flutter', 'podhelper.rb')
 
 target 'Zind_Example' do
-  pod 'Zind', :path => '../'
+	use_frameworks!
+	pod 'Zind', :path => '../'
 	install_all_flutter_pods(flutter_application_path)
+end
+
+post_install do |installer|
+	installer.pods_project.build_configurations.each do |config|
+		config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+	end
 end

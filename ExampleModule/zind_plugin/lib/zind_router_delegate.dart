@@ -60,7 +60,6 @@ class ZindRouterDelegate extends RouterDelegate<ZindRouteModel> with PopNavigato
     Widget routerWidget;
     switch (routerType) {
       case 1: // Share
-        print("_buildRouterWidget 1");
         routerWidget = Navigator(
           initialRoute: _currentRouteModel.url,
           onGenerateInitialRoutes: _navigator.onGenerateInitialRoutes,
@@ -72,7 +71,6 @@ class ZindRouterDelegate extends RouterDelegate<ZindRouteModel> with PopNavigato
       case 3: // Stack
       case 0: // General
       default:
-        print("_buildRouterWidget 230");
         routerWidget = _navigator;
         break;
     }
